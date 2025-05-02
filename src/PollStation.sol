@@ -34,5 +34,24 @@ contract PollStation {
         
     }
 
+    function getCandidate() public view returns(string[] memory){
+        return candidateDetails;
+    }
+
+    function getVote(string memory _name) public view returns (uint256) {
+    require(candidateExists[_name], "Candidate does not exist");
+    return voteCount[_name];
+    }
+
+    function getAllVotes() public view returns (string[] memory, uint256[] memory) {
+    uint256[] memory counts = new uint256[](candidateDetails.length);
+    for (uint256 i = 0; i < candidateDetails.length; i++) {
+        counts[i] = voteCount[candidateDetails[i]];
+    }
+    return (candidateDetails, counts);
+    }
+
+
+
 
 }
