@@ -93,6 +93,46 @@ contract PollStationTest is Test {
 
     }
 
+    function testGetAllVotes() public {
+    string[] memory Array = new string[](3);
+    Array[0] = "Alice";
+    Array[1] = "Bob";
+    Array[2] = "Charlie";
+
+    pollStation.addCandidate(Array);
+
+    // Step 2: Simulate 3 voters
+    address voter1 = address(0x1);
+    address voter2 = address(0x2);
+    address voter3 = address(0x3);
+
+    vm.prank(voter1);
+    pollStation.vote("Alice");
+
+    vm.prank(voter2);
+    pollStation.vote("Bob");
+
+    vm.prank(voter3);
+    pollStation.vote("Charlie");
+
+    // Step 3: Call getAllVotes
+    (string[] memory names, uint256[] memory counts) = pollStation.getAllVotes();
+
+    // Step 4: Assert correctness
+    assertEq(names.length, 3);
+    assertEq(counts.length, 3);
+
+    assertEq(names[0], "Alice");
+    assertEq(counts[0], 1);
+
+    assertEq(names[1], "Bob");
+    assertEq(counts[1], 1);
+
+    assertEq(names[2], "Charlie");
+    assertEq(counts[2], 1);
+}
+
+
 
 
 
