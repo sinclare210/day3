@@ -68,6 +68,30 @@ contract PollStationTest is Test {
         pollStation.addCandidate(Array);
     }
 
+    function testVote() public {
+        string[] memory Array = new string[](3);
+
+        Array[0] = "Alice";
+        Array[1] = "Bob";
+        Array[2] = "Sinclair";
+
+        pollStation.addCandidate(Array);
+
+        string[] memory candidate  = pollStation.getCandidate();
+
+        assertEq(candidate[0], "Alice");
+        assertEq(candidate[1], "Bob");
+        assertEq(candidate[2], "Sinclair");
+
+        
+        pollStation.vote("Alice");
+        
+
+        
+        assertEq(pollStation.getVote("Alice"), 1);
+        
+    }
+
 
 
     
