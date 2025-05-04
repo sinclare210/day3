@@ -83,14 +83,17 @@ contract PollStationTest is Test {
         assertEq(candidate[1], "Bob");
         assertEq(candidate[2], "Sinclair");
 
-        
         pollStation.vote("Alice");
-        
-
-        
         assertEq(pollStation.getVote("Alice"), 1);
-        
+
+        vm.expectRevert();//why? Because onle one can come from an address
+        pollStation.vote("Bob");
+        vm.expectRevert();
+        pollStation.vote("Alice");//user cant vote multiple times
+
     }
+
+
 
 
 
